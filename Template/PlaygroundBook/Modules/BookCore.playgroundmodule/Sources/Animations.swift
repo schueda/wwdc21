@@ -83,7 +83,7 @@ class Animations {
         jHandRotation.append(SKTexture(imageNamed: "handJ9"))
         jHandRotation.append(SKTexture(imageNamed: "handJ10"))
         
-        let interval = SKAction.wait(forDuration: 1)
+        let interval = SKAction.wait(forDuration: 0.7)
         let jHandgoingDownDuration = 0.15
         let jHandRotationDuration = 0.5
         
@@ -101,13 +101,12 @@ class Animations {
         jPathRotatingHand.move(to: .zero)
         jPathRotatingHand.addArc(withCenter: jArcCenterPoint - jIntermediatePoint, radius: jRadius, startAngle: .pi, endAngle: 0, clockwise: false)
         
-        let movementToJInitialPosition = SKAction.move(to: jInitPoint, duration: 0.2)
+        let movementToJInitialPosition = SKAction.move(to: jInitPoint, duration: 0.4)
         let jFirstFollow = SKAction.follow(jPathHandDown.cgPath, duration: jHandgoingDownDuration)
         let jSecondFollow = SKAction.follow(jPathRotatingHand.cgPath, duration: jHandRotationDuration)
-        let returnCenter = SKAction.move(to: handCenter, duration: 0.2)
+        let returnCenter = SKAction.move(to: handCenter, duration: 0.4)
         
         //hand animation
-        let defaultHand = SKAction.setTexture(SKTexture(imageNamed: "handDefault"))
         let jInitialHand = SKAction.setTexture(SKTexture(imageNamed: "handJ1"))
         let handRotation = SKAction.animate(with: jHandRotation, timePerFrame: jHandRotationDuration/Double(jHandRotation.count))
         
@@ -197,12 +196,33 @@ class Animations {
     }
     
     func createYAnimation(size: CGSize, handCenter: CGPoint) -> SKAction {
-        // to-do:
-        return createAAnimation()
+        
+        
+        let yInitialHand = SKAction.setTexture(SKTexture(imageNamed: "handY1"), resize: true)
+        let yIntermediateHand = SKAction.setTexture(SKTexture(imageNamed: "handY2"), resize: true)
+        let yIntermediate2Hand = SKAction.setTexture(SKTexture(imageNamed: "handY3"), resize: true)
+        let yFinalHand = SKAction.setTexture(SKTexture(imageNamed: "handY4"), resize: true)
+        let interval = SKAction.wait(forDuration: 0.1)
+        let edgeInterval = SKAction.wait(forDuration: 0.6)
+        
+        return SKAction.sequence([defaultHand, yInitialHand, edgeInterval, yIntermediateHand, interval, yIntermediate2Hand, interval, yFinalHand, edgeInterval, defaultHand])
     }
     
     func createZAnimation(size: CGSize, handCenter: CGPoint) -> SKAction {
-        // to-do:
-        return createAAnimation()
+        let zHand = SKAction.setTexture(SKTexture(imageNamed: "handZ"), resize: true)
+        let interval = SKAction.wait(forDuration: 0.7)
+        
+        let zInitialPoint = CGPoint(x: size.width/5, y: size.height/1.4)
+        let zSecondPoint = CGPoint(x: size.width/1.3, y: size.height/1.4)
+        let zThirdPoint = CGPoint(x: size.width/5, y: size.height/2)
+        let zFinalPoint = CGPoint(x: size.width/1.3, y: size.height/2)
+        
+        let zMoveToInitialPoint = SKAction.move(to: zInitialPoint, duration: 0.4)
+        let zMoveToSecondPoint = SKAction.move(to: zSecondPoint, duration: 0.7)
+        let zMoveToThirdPoint = SKAction.move(to: zThirdPoint, duration: 0.7)
+        let zMoveToFinalPoint = SKAction.move(to: zFinalPoint, duration: 0.7)
+        let returnCenter = SKAction.move(to: handCenter, duration: 0.4)
+        
+        return SKAction.sequence([defaultHand, zMoveToInitialPoint, zHand, interval, zMoveToSecondPoint, zMoveToThirdPoint, zMoveToFinalPoint, interval, defaultHand, returnCenter])
     }
 }

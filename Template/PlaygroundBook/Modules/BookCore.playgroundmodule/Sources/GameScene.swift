@@ -44,7 +44,7 @@ public class GameScene: SKScene {
                 addChild(key)
                 let baseX = self.frame.size.width/2 - (CGFloat(keys[0].count) * (key.frame.size.width + 2.5) - 2.5)/2
                 let baseY = CGFloat(keys.count) * (key.frame.size.height + 5) + key.frame.size.height/2
-                let x = baseX + CGFloat(indexCol) * (key.frame.size.width + 5) + CGFloat(indexRow) * key.frame.size.width/3
+                let x = baseX + CGFloat(indexCol) * (key.frame.size.width + 5) + CGFloat(indexRow) * key.frame.size.width/2
                 let y = baseY - CGFloat(indexRow) * (key.frame.size.height + 5)
                 key.position = CGPoint(x: x, y: y)
                 
