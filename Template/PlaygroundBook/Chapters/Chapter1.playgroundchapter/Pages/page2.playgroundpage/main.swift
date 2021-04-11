@@ -13,9 +13,10 @@ import UIKit
 import BookCore
 
 let sceneView = SKView(frame: CGRect(x: 0, y: 0, width: 512, height: 768))
-let scene = GameScene(size: CGSize(width:512, height:768))
+let scene = RealGameScene(size: CGSize(width:512, height:768))
 scene.scaleMode = .aspectFit
 sceneView.presentScene(scene)
 
 PlaygroundPage.current.liveView = sceneView
 PlaygroundPage.current.needsIndefiniteExecution = true
+

@@ -2,7 +2,6 @@ import SpriteKit
 
 public class GameScene: SKScene {
     let animations = Animations()
-    var spinnyNode: SKShapeNode!
     
     var anyKeyPressed: Bool = false
     
@@ -52,10 +51,6 @@ public class GameScene: SKScene {
             }
         }
         
-        
-        
-        
-        
         handAnimations["A"] = animations.createAAnimation()
         handAnimations["B"] = animations.createBAnimation()
         handAnimations["C"] = animations.createCAnimation()
@@ -88,16 +83,6 @@ public class GameScene: SKScene {
 //        camera.setScale(3)
 //        addChild(camera)
 //        self.camera = camera
-        let w = (size.width + size.height) * 0.02
-
-        spinnyNode = SKShapeNode(rectOf: CGSize(width: w, height: w), cornerRadius: w * 0.3)
-        spinnyNode.lineWidth = 2.5
-
-        let fadeAndRemove = SKAction.sequence([.wait(forDuration: 0.5),
-                                               .fadeOut(withDuration: 0.5),
-                                               .removeFromParent()])
-        spinnyNode.run(.repeatForever(.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-        spinnyNode.run(fadeAndRemove)
 
     }
 
@@ -108,12 +93,6 @@ public class GameScene: SKScene {
     }
 
     func touchDown(atPoint pos : CGPoint) {
-        guard let n = spinnyNode.copy() as? SKShapeNode else { return }
-
-        n.position = pos
-        n.strokeColor = SKColor.green
-        addChild(n)
-        
         guard !anyKeyPressed,
               let keyNode = keyNodes.first(where: {$0.contains(pos)}),
               let name = keyNode.name,
@@ -137,18 +116,9 @@ public class GameScene: SKScene {
     }
 
     func touchMoved(toPoint pos : CGPoint) {
-        guard let n = self.spinnyNode.copy() as? SKShapeNode else { return }
-        n.position = pos
-        addChild(n)
     }
 
     func touchUp(atPoint pos : CGPoint) {
-        guard let n = spinnyNode.copy() as? SKShapeNode else { return }
-
-        n.position = pos
-        n.strokeColor = SKColor.red
-        addChild(n)
-        
     }
 
     override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
