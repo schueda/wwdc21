@@ -212,15 +212,15 @@ class Animations {
         let zHand = SKAction.setTexture(SKTexture(imageNamed: "handZ"), resize: true)
         let interval = SKAction.wait(forDuration: 0.7)
         
-        let zInitialPoint = CGPoint(x: size.width/5, y: size.height/1.4)
-        let zSecondPoint = CGPoint(x: size.width/1.3, y: size.height/1.4)
-        let zThirdPoint = CGPoint(x: size.width/5, y: size.height/2)
-        let zFinalPoint = CGPoint(x: size.width/1.3, y: size.height/2)
+        let zInitialPoint = CGPoint(x: size.width * 0.35, y: size.height * 0.7)
+        let zSecondPoint = CGPoint(x: size.width * 0.65, y: size.height * 0.7)
+        let zThirdPoint = CGPoint(x: size.width * 0.35, y: size.height * 0.5)
+        let zFinalPoint = CGPoint(x: size.width * 0.65, y: size.height * 0.5)
         
         let zMoveToInitialPoint = SKAction.move(to: zInitialPoint, duration: 0.4)
-        let zMoveToSecondPoint = SKAction.move(to: zSecondPoint, duration: 0.7)
-        let zMoveToThirdPoint = SKAction.move(to: zThirdPoint, duration: 0.7)
-        let zMoveToFinalPoint = SKAction.move(to: zFinalPoint, duration: 0.7)
+        let zMoveToSecondPoint = SKAction.move(to: zSecondPoint, duration: 0.5)
+        let zMoveToThirdPoint = SKAction.move(to: zThirdPoint, duration: 0.5)
+        let zMoveToFinalPoint = SKAction.move(to: zFinalPoint, duration: 0.5)
         let returnCenter = SKAction.move(to: handCenter, duration: 0.4)
         
         return SKAction.sequence([defaultHand, zMoveToInitialPoint, zHand, interval, zMoveToSecondPoint, zMoveToThirdPoint, zMoveToFinalPoint, interval, defaultHand, returnCenter])

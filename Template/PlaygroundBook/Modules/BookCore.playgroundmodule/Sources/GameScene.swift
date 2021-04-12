@@ -17,7 +17,7 @@ public class GameScene: SKScene {
                 ["Z", "X", "C", "V", "B", "N", "M"]]
     
     func setupHand() {
-        handCenter = CGPoint(x: size.width/2, y: size.height/1.7)
+        handCenter = CGPoint(x: size.width * 0.53 , y: size.height * 0.59)
         hand = SKSpriteNode(imageNamed: "handDefault")
         hand.position = handCenter
         hand.setScale(0.3)
@@ -34,22 +34,35 @@ public class GameScene: SKScene {
         return key
     }
     
+    func setupBackground() {
+        let background = SKSpriteNode(imageNamed: "background")
+        background.position = CGPoint(x: size.width/2, y: size.height/2)
+        addChild(background)
+    }
     
-    override public func didMove(to view: SKView) {
-        setupHand()
+    func setupKeyBoard() {
         for (indexRow, row) in keys.enumerated() {
             for (indexCol, keyName) in row.enumerated() {
                 let key = createKey(keyName: keyName)
-                addChild(key)
-                let baseX = self.frame.size.width/2 - (CGFloat(keys[0].count) * (key.frame.size.width + 2.5) - 2.5)/2
-                let baseY = CGFloat(keys.count) * (key.frame.size.height + 5) + key.frame.size.height/2
+                
+                let baseX = self.frame.size.width/2 - (CGFloat(keys[0].count) * (key.frame.size.width + 1.5) - 1.5)/2
                 let x = baseX + CGFloat(indexCol) * (key.frame.size.width + 5) + CGFloat(indexRow) * key.frame.size.width/2
+                
+                let baseY = CGFloat(keys.count) * (key.frame.size.height + 5) + key.frame.size.height/2
                 let y = baseY - CGFloat(indexRow) * (key.frame.size.height + 5)
+                
                 key.position = CGPoint(x: x, y: y)
+                addChild(key)
                 
                 keyNodes.append(key)
             }
         }
+    }
+    
+    override public func didMove(to view: SKView) {
+        setupBackground()
+        setupHand()
+        setupKeyBoard()
         
         handAnimations["A"] = animations.createAAnimation()
         handAnimations["B"] = animations.createBAnimation()

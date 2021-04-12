@@ -163,8 +163,14 @@ public class RealGameScene: SKScene {
         addChild(streakLabel)
     }
     
+    func setupBackground() {
+        let background = SKSpriteNode(imageNamed: "background")
+        background.position = CGPoint(x: size.width/2, y: size.height/2)
+        addChild(background)
+    }
+    
     func setupHand() {
-        handCenter = CGPoint(x: size.width/2, y: size.height/1.7)
+        handCenter = CGPoint(x: size.width * 0.53 , y: size.height * 0.59)
         hand = SKSpriteNode(imageNamed: "handDefault")
         hand.position = handCenter
         hand.setScale(0.3)
@@ -183,6 +189,7 @@ public class RealGameScene: SKScene {
     
     
     override public func didMove(to view: SKView) {
+        setupBackground()
         setupHand()
         createStartButton()
         
