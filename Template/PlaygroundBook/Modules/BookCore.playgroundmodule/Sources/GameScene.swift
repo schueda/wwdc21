@@ -9,8 +9,12 @@ public class GameScene: SKScene {
     var handCenter = CGPoint(x: 0, y: 0)
     var handAnimations: [String: SKAction] = [:]
     var keyNodes: [SKSpriteNode] = []
+    var pressedKey: SKSpriteNode!
+    var pressedKeyOldTexture: SKTexture!
+    var pressedKeyOldPosition: CGPoint!
     
-    var keyJ: SKSpriteNode!
+    var keyDefaultSize = CGSize(width: 37.0, height: 47.1)
+    var stopKey: SKSpriteNode!
     
     let keys = [["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
                 ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
@@ -28,7 +32,7 @@ public class GameScene: SKScene {
     
     func createKey(keyName: String) -> SKSpriteNode {
         let key = SKSpriteNode(imageNamed: "key\(keyName)")
-        key.size = CGSize(width: 37.0, height: 47.1)
+        key.size = keyDefaultSize
         key.name = keyName
         
         return key
@@ -40,16 +44,25 @@ public class GameScene: SKScene {
         addChild(background)
     }
     
-    func setupKeyBoard() {
+    func setupKeyboard() {
         for (indexRow, row) in keys.enumerated() {
             for (indexCol, keyName) in row.enumerated() {
                 let key = createKey(keyName: keyName)
                 
-                let baseX = self.frame.size.width/2 - (CGFloat(keys[0].count) * (key.frame.size.width + 1.5) - 1.5)/2
-                let x = baseX + CGFloat(indexCol) * (key.frame.size.width + 5) + CGFloat(indexRow) * key.frame.size.width/2
+                let sceneXCenter = self.frame.size.width/2
+                let numberOfKeysOnFirstRow = CGFloat(keys[0].count)
+                let numberOfRows = CGFloat(keys.count)
+                let keyWidth = key.frame.size.width
+                let keyHeight = key.frame.size.height
+                let keyIndex = CGFloat(indexCol)
+                let rowIndex = CGFloat(indexRow)
+                let padding = CGFloat(5)
                 
-                let baseY = CGFloat(keys.count) * (key.frame.size.height + 5) + key.frame.size.height/2
-                let y = baseY - CGFloat(indexRow) * (key.frame.size.height + 5)
+                let baseX = sceneXCenter - (numberOfKeysOnFirstRow * (keyWidth + padding/2) - padding/2)/2 + padding/2
+                let x = baseX + keyIndex * (keyWidth + padding) + rowIndex * keyWidth/2
+                
+                let baseY = numberOfRows * (keyHeight + padding) + keyHeight/2
+                let y = baseY - rowIndex * (keyHeight + padding)
                 
                 key.position = CGPoint(x: x, y: y)
                 addChild(key)
@@ -59,10 +72,20 @@ public class GameScene: SKScene {
         }
     }
     
+    func setupStopKey() {
+        stopKey = SKSpriteNode(imageNamed: "keyStop")
+        stopKey.size = CGSize(width: 79.0, height: 47.1)
+        let lastKey = keyNodes.last!
+        let x = lastKey.position.x + lastKey.size.width/2 + 5 + stopKey.size.width/2
+        stopKey.position = CGPoint(x: x , y: lastKey.position.y)
+        addChild(stopKey)
+    }
+    
     override public func didMove(to view: SKView) {
         setupBackground()
         setupHand()
-        setupKeyBoard()
+        setupKeyboard()
+        setupStopKey()
         
         handAnimations["A"] = animations.createAAnimation()
         handAnimations["B"] = animations.createBAnimation()
@@ -91,6 +114,8 @@ public class GameScene: SKScene {
         handAnimations["Y"] = animations.createYAnimation(size: size, handCenter: handCenter)
         handAnimations["Z"] = animations.createZAnimation(size: size, handCenter: handCenter)
         
+        handAnimations["default"] = animations.returnToDefaultAnimation(handCenter: handCenter)
+        
         
 //        let camera = SKCameraNode()
 //        camera.setScale(3)
@@ -106,21 +131,49 @@ public class GameScene: SKScene {
     }
 
     func touchDown(atPoint pos : CGPoint) {
+        if stopKey.contains(pos) {
+            guard pressedKey != nil else {
+                return
+            }
+            let pressTexture = SKAction.setTexture(SKTexture(imageNamed: "pressedKeyStop"))
+            let pressSize = SKAction.resize(toHeight: keyDefaultSize.height * 0.8225, duration: 0)
+            let pressPositon = SKAction.move(to: CGPoint(x: stopKey.position.x, y: stopKey.position.y - keyDefaultSize.height * 0.0875), duration: 0)
+            let pressKey = SKAction.group([pressTexture, pressSize, pressPositon])
+
+            let interval = SKAction.wait(forDuration: 0.4)
+
+            let unpressTexture = SKAction.setTexture(SKTexture(imageNamed: "keyStop"))
+            let unpressSize = SKAction.resize(toHeight: keyDefaultSize.height, duration: 0)
+            let unpressPositon = SKAction.move(to: CGPoint(x: stopKey.position.x, y: keyNodes.last!.position.y), duration: 0)
+            let unpressKey = SKAction.group([unpressTexture, unpressSize, unpressPositon])
+            stopKey.run(SKAction.sequence([pressKey, interval, unpressKey]))
+            
+            pressedKey.texture = pressedKeyOldTexture
+            pressedKey.size = keyDefaultSize
+            pressedKey.position = pressedKeyOldPosition
+            pressedKey = nil
+            anyKeyPressed = false
+            let returnDefaultAnimation = handAnimations["default"]!
+            hand.removeAllActions()
+            hand.run(returnDefaultAnimation)
+        }
+        
         guard !anyKeyPressed,
               let keyNode = keyNodes.first(where: {$0.contains(pos)}),
               let name = keyNode.name,
               let animation = handAnimations[name] else {
             return
         }
+        pressedKey = keyNode
         anyKeyPressed = true
-        let oldTexture = keyNode.texture
-        let oldSize = keyNode.size
-        let oldPosition = keyNode.position
+        pressedKeyOldTexture = keyNode.texture
+        pressedKeyOldPosition = keyNode.position
         hand.run(animation) {
-            keyNode.texture = oldTexture
-            keyNode.size = oldSize
-            keyNode.position = oldPosition
+            keyNode.texture = self.pressedKeyOldTexture
+            keyNode.size = self.keyDefaultSize
+            keyNode.position = self.pressedKeyOldPosition
             self.anyKeyPressed = false
+            self.pressedKey = nil
         }
         let newTexture = SKTexture(imageNamed: "keyPressed\(name)")
         keyNode.texture = newTexture

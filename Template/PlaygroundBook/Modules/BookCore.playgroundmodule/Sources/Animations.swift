@@ -119,7 +119,7 @@ class Animations {
     
     func createKAnimation(size: CGSize, handCenter: CGPoint) -> SKAction {
         let interval = SKAction.wait(forDuration: 0.4)
-        let kTopPoint = CGPoint(x: size.width/2, y: size.height/1.4)
+        let kTopPoint = CGPoint(x: handCenter.x, y: size.height/1.4)
         
         let kHand = SKAction.setTexture(SKTexture(imageNamed: "handK"))
         
@@ -224,5 +224,10 @@ class Animations {
         let returnCenter = SKAction.move(to: handCenter, duration: 0.4)
         
         return SKAction.sequence([defaultHand, zMoveToInitialPoint, zHand, interval, zMoveToSecondPoint, zMoveToThirdPoint, zMoveToFinalPoint, interval, defaultHand, returnCenter])
+    }
+    
+    func returnToDefaultAnimation(handCenter: CGPoint) -> SKAction {
+        let returnCenter = SKAction.move(to: handCenter, duration: 0.4)
+        return SKAction.group([returnCenter, defaultHand])
     }
 }

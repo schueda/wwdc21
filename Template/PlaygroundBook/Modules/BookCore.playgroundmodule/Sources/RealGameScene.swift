@@ -14,6 +14,8 @@ public class RealGameScene: SKScene {
         [self.leftButton, self.middleButton, self.rightButton]
     }
     
+    var repeatButton: SKSpriteNode!
+    
     var scoreLabel: SKLabelNode!
     var streakLabel: SKLabelNode!
     
@@ -27,6 +29,7 @@ public class RealGameScene: SKScene {
                     "A", "S", "D", "F", "G", "H", "J", "K", "L",
                      "Z", "X", "C", "V", "B", "N", "M"]
     
+    var options: (left: String, middle: String, right: String)!
     var correct: String!
     
     var state = GameState.initialState
@@ -59,18 +62,16 @@ public class RealGameScene: SKScene {
         self.addChild(rightButton)
     }
     
-    func roundStart() {
-        let generatedRound = generateRound()
-        let options = generatedRound.options
-        correct = generatedRound.correct
-        leftButton.texture = SKTexture(imageNamed: "key\(options.left)")
-        leftButton.name = options.left
-        middleButton.texture = SKTexture(imageNamed: "key\(options.middle)")
-        middleButton.name = options.middle
-        rightButton.texture = SKTexture(imageNamed: "key\(options.right)")
-        rightButton.name = options.right
-        // prepara botoes pra aparecer
-        
+    func createRepeatButton() {
+        repeatButton = SKSpriteNode(imageNamed: "keyRepeat")
+        repeatButton.position = CGPoint(x: size.width * 0.5, y: size.height * 0.925)
+        repeatButton.size = CGSize(width: 37.0, height: 47.1)
+        repeatButton.name = "repeatButton"
+        repeatButton.alpha = 0
+        self.addChild(repeatButton)
+    }
+    
+    func runRound(animationLetter: String, completion: (()->())? = nil) {
         state = .animationState
         let interval = SKAction.wait(forDuration: 0.7)
         let animation = handAnimations[correct]!
@@ -80,7 +81,23 @@ public class RealGameScene: SKScene {
             self.leftButton.run(.fadeIn(withDuration: 0.2))
             self.middleButton.run(.fadeIn(withDuration: 0.2))
             self.rightButton.run(.fadeIn(withDuration: 0.2))
+            self.repeatButton.run(.fadeIn(withDuration: 0.2))
+            completion?()
         }
+    }
+    
+    func startRound() {
+        let generatedRound = generateRound()
+        options = generatedRound.options
+        correct = generatedRound.correct
+        leftButton.texture = SKTexture(imageNamed: "key\(options.left)")
+        leftButton.name = options.left
+        middleButton.texture = SKTexture(imageNamed: "key\(options.middle)")
+        middleButton.name = options.middle
+        rightButton.texture = SKTexture(imageNamed: "key\(options.right)")
+        rightButton.name = options.right
+
+        runRound(animationLetter: correct)
     }
     
     func generateRound() -> (options: (left: String, middle: String, right: String), correct: String) {
@@ -123,8 +140,9 @@ public class RealGameScene: SKScene {
         run(SKAction.wait(forDuration: 2)) {
             self.leftButton.run(.fadeOut(withDuration: 0.2))
             self.middleButton.run(.fadeOut(withDuration: 0.2))
-            self.rightButton.run(.fadeOut(withDuration: 0.2)) {
-                self.roundStart()
+            self.rightButton.run(.fadeOut(withDuration: 0.2))
+            self.repeatButton.run(.fadeOut(withDuration: 0.2)){
+                self.startRound()
                 pressedButton.size = CGSize(width: pressedButton.frame.size.width, height: pressedButton.frame.size.height / 0.8225)
                 pressedButton.position = CGPoint(x: pressedButton.position.x, y: self.size.height/4.5)
             }
@@ -141,10 +159,10 @@ public class RealGameScene: SKScene {
     
     func createScore() {
         let scoreTitle = SKSpriteNode(imageNamed: "score")
-        scoreTitle.position = CGPoint(x: size.width*0.87, y: size.height*0.95)
+        scoreTitle.position = CGPoint(x: size.width*0.12, y: size.height*0.95)
         scoreTitle.size = CGSize(width: 53.6, height: 23.7)
         scoreLabel = SKLabelNode(text: String(score))
-        scoreLabel.position = CGPoint(x: size.width*0.9, y: size.height*0.9)
+        scoreLabel.position =  CGPoint(x: size.width * 0.12, y: size.height*0.9)
         scoreLabel.fontColor = UIColor(hue: 0, saturation: 0, brightness: 0.2, alpha: 1)
         scoreLabel.fontName = "avenir"
         addChild(scoreTitle)
@@ -153,10 +171,10 @@ public class RealGameScene: SKScene {
     
     func createStreak() {
         let streakTitle = SKSpriteNode(imageNamed: "streak")
-        streakTitle.position = CGPoint(x: size.width*0.86, y: size.height*0.85)
+        streakTitle.position = CGPoint(x: size.width*0.87, y: size.height*0.95)
         streakTitle.size = CGSize(width: 60.2, height: 23.7)
         streakLabel = SKLabelNode(text: String(streak))
-        streakLabel.position = CGPoint(x: size.width * 0.9, y: size.height*0.8)
+        streakLabel.position = CGPoint(x: size.width*0.87, y: size.height*0.9)
         streakLabel.fontColor = UIColor(hue: 0, saturation: 0, brightness: 0.2, alpha: 1)
         streakLabel.fontName = "avenir"
         addChild(streakTitle)
@@ -247,7 +265,8 @@ public class RealGameScene: SKScene {
                     self.startButton.run(.fadeOut(withDuration: 0.2)) {
                         self.startButton.removeFromParent()
                         self.createTreeButtons()
-                        self.roundStart()
+                        self.createRepeatButton()
+                        self.startRound()
                         self.createScore()
                         self.createStreak()
                     }
@@ -267,11 +286,23 @@ public class RealGameScene: SKScene {
             if rightButton.contains(pos) {
                 attemptChoice(pressedButtonName: rightButton.name!)
             }
+            
+            if repeatButton.contains(pos) {
+                leftButton.run(.fadeOut(withDuration: 0.2))
+                middleButton.run(.fadeOut(withDuration: 0.2))
+                rightButton.run(.fadeOut(withDuration: 0.2))
+                
+                runRound(animationLetter: correct) {
+                    self.repeatButton.texture = SKTexture(imageNamed: "keyRepeat")
+                    self.repeatButton.size = CGSize(width: 37.0, height: 47.1)
+                    self.repeatButton.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.925)
+                }
+                repeatButton.texture = SKTexture(imageNamed: "keyPressedRepeat")
+                repeatButton.size = CGSize(width: repeatButton.frame.size.width, height: repeatButton.frame.size.height * 0.8225)
+                repeatButton.position = CGPoint(x: repeatButton.position.x, y: repeatButton.position.y - repeatButton.frame.size.height * 0.04375)
+                
+            }
         }
-        // verifica estado do jogo
-        // caso possível faz escolha
-        // fazer funcao da tentativa
-        
     }
     
 
