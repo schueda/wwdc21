@@ -39,7 +39,7 @@ public class RealGameScene: SKScene {
     var streak: Int = 0
     
     
-    func createTreeButtons() {
+    func createThreeButtons() {
         leftButton = SKSpriteNode(imageNamed: "keyL")
         leftButton.position = CGPoint(x: size.width * 0.25, y: size.height/4.5)
         leftButton.size = CGSize(width: 37.0 * 2, height: 47.1 * 2)
@@ -191,7 +191,7 @@ public class RealGameScene: SKScene {
         handCenter = CGPoint(x: size.width * 0.53 , y: size.height * 0.59)
         hand = SKSpriteNode(imageNamed: "handDefault")
         hand.position = handCenter
-        hand.setScale(0.3)
+        hand.setScale(0.65)
         hand.name = "hand"
         hand.constraints = [SKConstraint.zRotation(SKRange(lowerLimit: 0, upperLimit: 0))]
         self.addChild(hand)
@@ -264,7 +264,7 @@ public class RealGameScene: SKScene {
                 self.startButton.run(.wait(forDuration: 0.35)) {
                     self.startButton.run(.fadeOut(withDuration: 0.2)) {
                         self.startButton.removeFromParent()
-                        self.createTreeButtons()
+                        self.createThreeButtons()
                         self.createRepeatButton()
                         self.startRound()
                         self.createScore()

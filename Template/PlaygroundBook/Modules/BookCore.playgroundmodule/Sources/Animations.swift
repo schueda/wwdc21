@@ -12,7 +12,7 @@ class Animations {
     
     func createSingleFrameAnimation(imageNamed imageName: String) -> SKAction {
         let hand = SKAction.setTexture(SKTexture(imageNamed: imageName), resize: true)
-        let interval = SKAction.wait(forDuration: 2)
+        let interval = SKAction.wait(forDuration: 1.5)
         
         return SKAction.sequence([defaultHand, hand, interval, defaultHand])
     }

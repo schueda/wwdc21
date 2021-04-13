@@ -4,7 +4,6 @@ public class GameScene: SKScene {
     let animations = Animations()
     
     var anyKeyPressed: Bool = false
-    
     var hand: SKSpriteNode!
     var handCenter = CGPoint(x: 0, y: 0)
     var handAnimations: [String: SKAction] = [:]
@@ -12,10 +11,8 @@ public class GameScene: SKScene {
     var pressedKey: SKSpriteNode!
     var pressedKeyOldTexture: SKTexture!
     var pressedKeyOldPosition: CGPoint!
-    
     var keyDefaultSize = CGSize(width: 37.0, height: 47.1)
     var stopKey: SKSpriteNode!
-    
     let keys = [["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
                 ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
                 ["Z", "X", "C", "V", "B", "N", "M"]]
@@ -24,18 +21,10 @@ public class GameScene: SKScene {
         handCenter = CGPoint(x: size.width * 0.53 , y: size.height * 0.59)
         hand = SKSpriteNode(imageNamed: "handDefault")
         hand.position = handCenter
-        hand.setScale(0.3)
+        hand.setScale(0.65)
         hand.name = "hand"
         hand.constraints = [SKConstraint.zRotation(SKRange(lowerLimit: 0, upperLimit: 0))]
         self.addChild(hand)
-    }
-    
-    func createKey(keyName: String) -> SKSpriteNode {
-        let key = SKSpriteNode(imageNamed: "key\(keyName)")
-        key.size = keyDefaultSize
-        key.name = keyName
-        
-        return key
     }
     
     func setupBackground() {
@@ -70,6 +59,13 @@ public class GameScene: SKScene {
                 keyNodes.append(key)
             }
         }
+    }
+    
+    func createKey(keyName: String) -> SKSpriteNode {
+        let key = SKSpriteNode(imageNamed: "key\(keyName)")
+        key.size = keyDefaultSize
+        key.name = keyName
+        return key
     }
     
     func setupStopKey() {
