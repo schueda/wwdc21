@@ -12,7 +12,7 @@ class Animations {
     
     func createSingleFrameAnimation(imageNamed imageName: String) -> SKAction {
         let hand = SKAction.setTexture(SKTexture(imageNamed: imageName), resize: true)
-        let interval = SKAction.wait(forDuration: 1.5)
+        let interval = SKAction.wait(forDuration: 2)
         
         return SKAction.sequence([defaultHand, hand, interval, defaultHand])
     }
@@ -229,5 +229,21 @@ class Animations {
     func returnToDefaultAnimation(handCenter: CGPoint) -> SKAction {
         let returnCenter = SKAction.move(to: handCenter, duration: 0.4)
         return SKAction.group([returnCenter, defaultHand])
+    }
+    
+    func createCorrectAnimation() -> SKAction {
+        return createSingleFrameAnimation(imageNamed: "handCorrect")
+    }
+    
+    func createMistakeAnimation() -> SKAction {
+        return createSingleFrameAnimation(imageNamed: "handMistake")
+    }
+    
+    func createSparklesHandsAnimation(size: CGSize) -> SKAction {
+        let getIntoTheScene = SKAction.move(to: CGPoint(x: size.width*0.87, y: size.height*0.85), duration: 0.2)
+        let getOutOfTheScene = SKAction.move(to: CGPoint(x: size.width*1.1, y: size.height*0.85), duration: 0.2)
+        let interval = SKAction.wait(forDuration: 1.6)
+        
+        return SKAction.sequence([getIntoTheScene, interval, getOutOfTheScene])
     }
 }

@@ -1,4 +1,5 @@
 import SpriteKit
+import AVFoundation
 
 public class RealGameScene: SKScene {
     let animations = Animations()
@@ -14,11 +15,17 @@ public class RealGameScene: SKScene {
         [self.leftButton, self.middleButton, self.rightButton]
     }
     
+    var correctSound: AVAudioPlayer!
+    var comboSound: AVAudioPlayer!
+    var mistakeSound: AVAudioPlayer!
+    
     var repeatButton: SKSpriteNode!
     
     var scoreLabel: SKLabelNode!
     var streakLabel: SKLabelNode!
     
+    let sparklesHandsLabel = SKLabelNode(text: "􀲯")
+    var sparklesHandsAnimation: SKAction!
     
     var hand: SKSpriteNode!
     var handCenter = CGPoint(x: 0, y: 0)
@@ -31,6 +38,7 @@ public class RealGameScene: SKScene {
     
     var options: (left: String, middle: String, right: String)!
     var correct: String!
+    
     
     var state = GameState.initialState
     
@@ -124,7 +132,14 @@ public class RealGameScene: SKScene {
             pressedButton.texture = SKTexture(imageNamed: "pressedCorrectKey\(correct!)")
             pressedButton.size =  CGSize(width: pressedButton.frame.size.width, height: pressedButton.frame.size.height * 0.8225)
             pressedButton.position = CGPoint(x: pressedButton.position.x, y: pressedButton.position.y - pressedButton.frame.size.height * 0.0875)
-            
+            hand.run(handAnimations["correct"]!)
+
+            if streak%5 == 0 {
+                playComboSound()
+                sparklesHandsLabel.run(sparklesHandsAnimation)
+            } else {
+                playCorrectSound()
+            }
         } else {
             streak = 0
             pressedButton.texture = SKTexture(imageNamed: "wrongKey\(pressedButtonName)")
@@ -133,6 +148,8 @@ public class RealGameScene: SKScene {
             
             let correctButton = buttons.first(where: {$0.name == correct})!
             correctButton.texture = SKTexture(imageNamed: "correctKey\(correct!)")
+            hand.run(handAnimations["mistake"]!)
+            playMistakeSound()
         }
         changeScore()
         changeStreak()
@@ -155,6 +172,8 @@ public class RealGameScene: SKScene {
     
     func changeStreak() {
         streakLabel.text = String(streak)
+        if streak%5 == 0 {
+        }
     }
     
     func createScore() {
@@ -205,11 +224,45 @@ public class RealGameScene: SKScene {
         self.addChild(startButton)
     }
     
+    func playCorrectSound() {
+        let url: URL = Bundle.main.url(forResource: "correct", withExtension: "mp3")!
+        correctSound = try! AVAudioPlayer(contentsOf: url, fileTypeHint: nil)
+
+        correctSound.numberOfLoops = 1
+        correctSound.prepareToPlay()
+        correctSound.volume = 0.3
+        correctSound.play()
+    }
+    
+    func playComboSound() {
+        let url: URL = Bundle.main.url(forResource: "correct", withExtension: "mp3")!
+        comboSound = try! AVAudioPlayer(contentsOf: url, fileTypeHint: nil)
+
+        comboSound.numberOfLoops = 1
+        comboSound.prepareToPlay()
+        comboSound.volume = 0.3
+        comboSound.play()
+    }
+    
+    func playMistakeSound() {
+        let url: URL = Bundle.main.url(forResource: "mistake", withExtension: "mp3")!
+        mistakeSound = try! AVAudioPlayer(contentsOf: url, fileTypeHint: nil)
+
+        mistakeSound.numberOfLoops = 1
+        mistakeSound.prepareToPlay()
+        mistakeSound.volume = 0.3
+        mistakeSound.play()
+    }
+    
     
     override public func didMove(to view: SKView) {
         setupBackground()
         setupHand()
         createStartButton()
+        
+        sparklesHandsLabel.position = CGPoint(x: size.width*1.1, y: size.height*0.85)
+        addChild(sparklesHandsLabel)
+        sparklesHandsAnimation = animations.createSparklesHandsAnimation(size: size)
         
         handAnimations["A"] = animations.createAAnimation()
         handAnimations["B"] = animations.createBAnimation()
@@ -237,6 +290,9 @@ public class RealGameScene: SKScene {
         handAnimations["X"] = animations.createXAnimation(size: size, handCenter: handCenter)
         handAnimations["Y"] = animations.createYAnimation(size: size, handCenter: handCenter)
         handAnimations["Z"] = animations.createZAnimation(size: size, handCenter: handCenter)
+        
+        handAnimations["correct"] = animations.createCorrectAnimation()
+        handAnimations["mistake"] = animations.createMistakeAnimation()
         
         
 //        let camera = SKCameraNode()
