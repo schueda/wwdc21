@@ -1,7 +1,11 @@
 import SpriteKit
+import AVFoundation
 
 public class GameScene: SKScene {
     let animations = Animations()
+    
+    var touchDownSound: AVAudioPlayer!
+    var touchUpSound: AVAudioPlayer!
     
     var anyKeyPressed: Bool = false
     var hand: SKSpriteNode!
@@ -75,6 +79,24 @@ public class GameScene: SKScene {
         let x = lastKey.position.x + lastKey.size.width/2 + 5 + stopKey.size.width/2
         stopKey.position = CGPoint(x: x , y: lastKey.position.y)
         addChild(stopKey)
+    }
+    
+    func playTouchDownSound() {
+        let url: URL = Bundle.main.url(forResource: "touchDown", withExtension: "mp3")!
+        touchDownSound = try! AVAudioPlayer(contentsOf: url, fileTypeHint: nil)
+
+        touchDownSound.prepareToPlay()
+        touchDownSound.volume = 0.3
+        touchDownSound.play()
+    }
+    
+    func playTouchUpSound() {
+        let url: URL = Bundle.main.url(forResource: "touchUp", withExtension: "mp3")!
+        touchUpSound = try! AVAudioPlayer(contentsOf: url, fileTypeHint: nil)
+
+        touchUpSound.prepareToPlay()
+        touchUpSound.volume = 0.3
+        touchUpSound.play()
     }
     
     override public func didMove(to view: SKView) {
@@ -152,6 +174,7 @@ public class GameScene: SKScene {
             let returnDefaultAnimation = handAnimations["default"]!
             hand.removeAllActions()
             hand.run(returnDefaultAnimation)
+            playTouchDownSound()
         }
         
         guard !anyKeyPressed,
@@ -170,7 +193,9 @@ public class GameScene: SKScene {
             keyNode.position = self.pressedKeyOldPosition
             self.anyKeyPressed = false
             self.pressedKey = nil
+            self.playTouchDownSound()
         }
+        playTouchUpSound()
         let newTexture = SKTexture(imageNamed: "keyPressed\(name)")
         keyNode.texture = newTexture
         keyNode.size = CGSize(width: keyNode.frame.size.width, height: keyNode.frame.size.height * 0.8225)

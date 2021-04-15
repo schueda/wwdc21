@@ -5,9 +5,14 @@
 //  Instantiates a live view and passes it to the PlaygroundSupport framework.
 //
 
-import UIKit
-import BookCore
 import PlaygroundSupport
+import SpriteKit
+import BookCore
 
-// Instantiate a new instance of the live view from BookCore and pass it to PlaygroundSupport.
-PlaygroundPage.current.liveView = instantiateLiveView()
+// Load the SKScene from 'GameScene.sks'
+let sceneView = SKView(frame: CGRect(x: 0, y: 0, width: 512, height: 768))
+//let scene = LearningLiveView(size: CGSize(width:512, height:768)))
+//scene.scaleMode = .aspectFit
+//sceneView.presentScene(scene)
+
+PlaygroundSupport.PlaygroundPage.current.liveView = sceneView

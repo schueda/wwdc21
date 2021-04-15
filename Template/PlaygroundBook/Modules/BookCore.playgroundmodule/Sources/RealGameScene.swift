@@ -25,6 +25,7 @@ public class RealGameScene: SKScene {
     var streakLabel: SKLabelNode!
     
     let sparklesHandsLabel = SKLabelNode(text: "􀲯")
+    let sparklesHandsBorder = SKLabelNode(text: "􀲮")
     var sparklesHandsAnimation: SKAction!
     
     var hand: SKSpriteNode!
@@ -134,9 +135,10 @@ public class RealGameScene: SKScene {
             pressedButton.position = CGPoint(x: pressedButton.position.x, y: pressedButton.position.y - pressedButton.frame.size.height * 0.0875)
             hand.run(handAnimations["correct"]!)
 
-            if streak%5 == 0 {
+            if streak%3 == 0 {
                 playComboSound()
                 sparklesHandsLabel.run(sparklesHandsAnimation)
+                sparklesHandsBorder.run(sparklesHandsAnimation)
             } else {
                 playCorrectSound()
             }
@@ -228,17 +230,15 @@ public class RealGameScene: SKScene {
         let url: URL = Bundle.main.url(forResource: "correct", withExtension: "mp3")!
         correctSound = try! AVAudioPlayer(contentsOf: url, fileTypeHint: nil)
 
-        correctSound.numberOfLoops = 1
         correctSound.prepareToPlay()
         correctSound.volume = 0.3
         correctSound.play()
     }
     
     func playComboSound() {
-        let url: URL = Bundle.main.url(forResource: "correct", withExtension: "mp3")!
+        let url: URL = Bundle.main.url(forResource: "combo", withExtension: "mp3")!
         comboSound = try! AVAudioPlayer(contentsOf: url, fileTypeHint: nil)
 
-        comboSound.numberOfLoops = 1
         comboSound.prepareToPlay()
         comboSound.volume = 0.3
         comboSound.play()
@@ -248,7 +248,6 @@ public class RealGameScene: SKScene {
         let url: URL = Bundle.main.url(forResource: "mistake", withExtension: "mp3")!
         mistakeSound = try! AVAudioPlayer(contentsOf: url, fileTypeHint: nil)
 
-        mistakeSound.numberOfLoops = 1
         mistakeSound.prepareToPlay()
         mistakeSound.volume = 0.3
         mistakeSound.play()
@@ -262,6 +261,9 @@ public class RealGameScene: SKScene {
         
         sparklesHandsLabel.position = CGPoint(x: size.width*1.1, y: size.height*0.85)
         addChild(sparklesHandsLabel)
+        sparklesHandsBorder.position = CGPoint(x: size.width*1.1, y: size.height*0.85)
+        sparklesHandsBorder.fontColor = UIColor(red: 51/256, green: 51/256, blue: 51/256, alpha: 1)
+        addChild(sparklesHandsBorder)
         sparklesHandsAnimation = animations.createSparklesHandsAnimation(size: size)
         
         handAnimations["A"] = animations.createAAnimation()
