@@ -7,7 +7,7 @@
 
 import SpriteKit
 
-class LearningLiveView: SKScene {
+public class LearningLiveView: SKScene {
     let animations = Animations()
     var hand: SKSpriteNode!
     var handCenter = CGPoint(x: 0, y: 0)
@@ -19,7 +19,7 @@ class LearningLiveView: SKScene {
         hand.setScale(0.65)
         hand.name = "hand"
         hand.constraints = [SKConstraint.zRotation(SKRange(lowerLimit: 0, upperLimit: 0))]
-        self.addChild(hand)
+        addChild(hand)
     }
     
     func setupBackground() {
@@ -29,12 +29,12 @@ class LearningLiveView: SKScene {
     }
     
     
-//    override public func didMove(to view: SKView) {
-//        setupHand()
-//        setupBackground()
-//        
-////        hand.run(animations.createAAnimation())
-//        
-//        
-//    }
+    override public func didMove(to view: SKView) {
+        setupBackground()
+        setupHand()
+        
+        hand.run(SKAction.repeatForever(SKAction.sequence([SKAction.wait(forDuration: 1), animations.createAAnimation()])))
+        
+        
+    }
 }

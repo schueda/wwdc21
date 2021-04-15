@@ -12,6 +12,11 @@ public class Cutscene: SKScene {
     let animations = Animations()
     var handAnimations: [String: SKAction] = [:]
     
+    var text1 = SKSpriteNode(imageNamed: "flyText")
+    var text2 = SKSpriteNode(imageNamed: "beachesText")
+    var icon1 = SKLabelNode(text: "􀑓")
+    var icon2 = SKLabelNode(text: "􀆷")
+    
     var hand: SKSpriteNode!
     var handCenter = CGPoint.zero
         
@@ -28,6 +33,7 @@ public class Cutscene: SKScene {
     var anyKeyPressed = false
     
     var startKey: SKSpriteNode!
+    var startKeyPosition: CGPoint!
     
     func setupBackground() {
         let background = SKSpriteNode(imageNamed: "doubleSizeBackground")
@@ -58,6 +64,37 @@ public class Cutscene: SKScene {
         key.size = keyDefaultSize
         key.name = keyName
         return key
+    }
+    
+    func createText1() {
+        text1.alpha = 0
+        text1.size = CGSize(width: text1.size.width * 0.5, height: text1.size.height * 0.5)
+        text1.position = CGPoint(x: size.width * 0.25, y: size.height * 0.75)
+        addChild(text1)
+        
+    }
+    
+    func createText2() {
+        text2.alpha = 0
+        text2.size = CGSize(width: text2.size.width * 0.5, height: text2.size.height * 0.5)
+        text2.position = CGPoint(x: size.width * 0.75, y: size.height * 0.25)
+        addChild(text2)
+    }
+    
+    func createIcon1() {
+        icon1.alpha = 0
+        icon1.position = CGPoint(x: size.width * 0.25, y: size.height * 0.55)
+        icon1.fontSize = 100
+        icon1.fontColor = UIColor(hue: 0, saturation: 0, brightness: 0.2, alpha: 1)
+        addChild(icon1)
+    }
+    
+    func createIcon2() {
+        icon2.alpha = 0
+        icon2.position = CGPoint(x: size.width * 0.75, y: size.height * 0.4)
+        icon2.fontSize = 100
+        icon2.fontColor = UIColor(hue: 0, saturation: 0, brightness: 0.2, alpha: 1)
+        addChild(icon2)
     }
     
     func setupKeyboard() {
@@ -101,8 +138,9 @@ public class Cutscene: SKScene {
     }
     
     func createStartKey() {
+        startKeyPosition = CGPoint(x: size.width * 0.5, y: size.height * 0.3)
         startKey = SKSpriteNode(imageNamed: "startButton")
-        startKey.position = CGPoint(x: size.width * 0.5, y: size.height * 0.3)
+        startKey.position = startKeyPosition
         startKey.size = CGSize(width: 85.3*1.5, height: 47.1*1.5)
         startKey.name = "startKey"
         self.addChild(startKey)
@@ -113,6 +151,11 @@ public class Cutscene: SKScene {
         setupKeyboard()
         setupHand()
         createStartKey()
+        
+        createText1()
+        createText2()
+        createIcon1()
+        createIcon2()
         
         handAnimations["T"] = animations.createTAnimation()
         handAnimations["H"] = animations.createHAnimation()
@@ -134,10 +177,98 @@ public class Cutscene: SKScene {
             return true
         }
     }
+    
+    func wholeAnimation() {
+        let fadeDuration = 0.7
+        let intervalDuration = 2.0
+        let fadeIn = SKAction.fadeIn(withDuration: fadeDuration)
+        let fadeOut = SKAction.fadeOut(withDuration: fadeDuration)
+        let halfScale = SKAction.scale(by: 0.5, duration: 0)
+        let rotateIcon2ToDefault = SKAction.run {self.icon2.zRotation = 0}
+        
+        let intervalWithFades = SKAction.wait(forDuration: intervalDuration + 2*fadeDuration)
+        let interval = SKAction.wait(forDuration: intervalDuration)
+        
+        let startDelay = SKAction.wait(forDuration: 1)
+        
+        //bloco de codigo text1
+        let moveToFamily = SKAction.move(to: CGPoint(x: size.width * 0.5, y: size.height * 0.35), duration: 0)
+        let changeToFamilyText = SKAction.setTexture(SKTexture(imageNamed: "familyText"), resize: true)
+        let moveToGramma = SKAction.move(to: CGPoint(x: size.width * 0.25, y: size.height * 0.75), duration: 0)
+        let changeToGrammaText = SKAction.setTexture(SKTexture(imageNamed: "grammaText"), resize: true)
+        let moveToCommunication = SKAction.move(to: CGPoint(x: size.width * 0.75, y: size.height * 0.75), duration: 0)
+        let changeToCommunicationText = SKAction.setTexture(SKTexture(imageNamed: "communicatingText"), resize: true)
+        
+        //bloco de codigo do text2
+        let changeToFrustratingText = SKAction.setTexture(SKTexture(imageNamed: "frustratingText"), resize: true)
+        let moveToLove = SKAction.move(to: CGPoint(x: size.width * 0.75, y: size.height * 0.25), duration: 0)
+        let changeToLoveText = SKAction.setTexture(SKTexture(imageNamed: "loveText"), resize: true)
+        let moveToDeaf = SKAction.move(to: CGPoint(x: size.width * 0.5, y: size.height * 0.4), duration: 0)
+        let changeToDeafText = SKAction.setTexture(SKTexture(imageNamed: "deafText"), resize: true)
+        
+        //bloco de codigo do icon1
+        let moveToCenter = SKAction.move(to: CGPoint(x: size.width * 0.5, y: size.height * 0.5), duration: 0)
+        let changeToFamilyIcon = SKAction.run { self.icon1.text = "􀝋" }
+        let moveToUnderGramma = SKAction.move(to: CGPoint(x: size.width * 0.25, y: size.height * 0.5), duration: 0)
+        let changeToStoryIcon = SKAction.run { self.icon1.text = "􀌯" }
+        let moveToUnderCommunicating = SKAction.move(to: CGPoint(x: size.width * 0.75, y: size.height * 0.5), duration: 0)
+        let changeToCommunicatingIcon = SKAction.run { self.icon1.text = "􀯩" }
+        
+        //bloco de codigo do icon2
+        let moveToOverFamily = SKAction.move(to: CGPoint(x: size.width * 0.46, y: size.height * 0.5), duration: 0)
+        let changeToFrustratingIcon = SKAction.run { self.icon2.text = "􀓨" }
+        let rotateIcon2 = SKAction.run {self.icon2.zRotation = -.pi/4}
+        let moveToUnderLove = SKAction.move(to: CGPoint(x: size.width * 0.75, y: size.height * 0.4), duration: 0)
+        let changeToLoveIcon = SKAction.run { self.icon2.text = "􀊵" }
+        let moveToUnderDeaf = SKAction.move(to: CGPoint(x: size.width * 0.5, y: size.height * 0.5), duration: 0)
+        let changeToDeafIcon = SKAction.run { self.icon2.text = "􀧁" }
+        
+        text1.run(SKAction.sequence([startDelay, fadeIn, interval, fadeOut,
+                                     moveToFamily, changeToFamilyText, halfScale, intervalWithFades, fadeIn, interval, fadeOut,
+                                     moveToGramma, changeToGrammaText, intervalWithFades, fadeIn, interval, fadeOut,
+                                     moveToCommunication, changeToCommunicationText, intervalWithFades, fadeIn, interval, fadeOut]))
 
+        icon1.run(SKAction.sequence([startDelay, fadeIn, interval, fadeOut,
+                                     moveToCenter, changeToFamilyIcon, intervalWithFades, fadeIn, interval, fadeOut,
+                                     moveToUnderGramma, changeToStoryIcon, intervalWithFades, fadeIn, interval, fadeOut,
+                                     moveToUnderCommunicating, changeToCommunicatingIcon, intervalWithFades, fadeIn, interval, fadeOut]))
+
+        text2.run(SKAction.sequence([startDelay, intervalWithFades, fadeIn, interval, fadeOut,
+                                     moveToFamily, changeToFrustratingText, halfScale, intervalWithFades, fadeIn, interval, fadeOut,
+                                     moveToLove, changeToLoveText, intervalWithFades, fadeIn, interval, fadeOut,
+                                     moveToDeaf, changeToDeafText, intervalWithFades, fadeIn]))
+
+        icon2.run(SKAction.sequence([startDelay, intervalWithFades, fadeIn, interval, fadeOut,
+                                     moveToOverFamily, changeToFrustratingIcon, rotateIcon2, intervalWithFades, fadeIn, interval, fadeOut,
+                                     rotateIcon2ToDefault, moveToUnderLove, changeToLoveIcon, intervalWithFades, fadeIn, interval, fadeOut,
+                                     moveToUnderDeaf, changeToDeafIcon, intervalWithFades, fadeIn]))
+    }
+    
     func touchDown(atPoint pos : CGPoint) {
+        let fadeDuration = 0.4
         if startKey.contains(pos) {
-            hand.color = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
+            startKey.texture = SKTexture(imageNamed: "pressedStartButton")
+            startKey.size = CGSize(width: startKey.frame.size.width, height: startKey.frame.size.height * 0.8225)
+            startKey.position = CGPoint(x: startKey.position.x, y: startKey.position.y - startKey.frame.size.height * 0.0875)
+            startKey.run(.wait(forDuration: 0.35)) {
+                self.startKey.texture = SKTexture(imageNamed: "startButton")
+                self.startKey.size = CGSize(width: self.startKey.frame.size.width, height: self.startKey.frame.size.height / 0.8225)
+                self.startKey.position = CGPoint(x: self.startKey.position.x, y: self.startKeyPosition.y)
+                self.startKey.run(.wait(forDuration: 0.35)) {
+                    for key in self.keyNodes {
+                        key.run(.fadeOut(withDuration: fadeDuration))
+                    }
+                    self.hand.run(.fadeOut(withDuration: fadeDuration))
+                    self.startKey.run(.fadeOut(withDuration: fadeDuration)) {
+                        self.startKey.removeFromParent()
+                        for key in self.keyNodes {
+                            key.removeFromParent()
+                        }
+                        self.hand.removeFromParent()
+                        self.wholeAnimation()
+                    }
+                }
+            }
         }
         guard !anyKeyPressed,
               let keyNode = keyNodes.first(where: {$0.contains(pos)}),
@@ -189,4 +320,3 @@ public class Cutscene: SKScene {
         // Called before each frame is rendered
     }
 }
-
