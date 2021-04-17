@@ -6,9 +6,9 @@
  
  If you get it wrong, your streak will be set to zero, but don't worry, **you’ll be shown the right answer** so that in the next time you get it right. Have fun and try to learn from your mistakes.
  
-> The hand gestures that appear after the attempts are not from Libras, they are simply thumbs up and thumbs down.
+> The hand gestures that appear after the attempts are not from _Libras_, they are simply thumbs up and thumbs down.
  
-> If you got distracted or it was too fast, you can hit the repeat key and watch the hand gesture again.
+> If you got distracted or it was too fast, you can hit the repeat key and watch sign again.
  
  */
 

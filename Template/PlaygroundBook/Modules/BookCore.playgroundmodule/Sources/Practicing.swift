@@ -63,12 +63,20 @@ public class Practicing: SKScene {
         learnFrames.append(SKTexture(imageNamed: "handLearn3"))
         learnFrames.append(SKTexture(imageNamed: "handLearn4"))
         learnFrames.append(SKTexture(imageNamed: "handLearn5"))
-        let learnAnimationFrames = SKAction.animate(with: learnFrames, timePerFrame: 1/12)
+        learnFrames.append(SKTexture(imageNamed: "handLearn4"))
+        learnFrames.append(SKTexture(imageNamed: "handLearn3"))
+        learnFrames.append(SKTexture(imageNamed: "handLearn2"))
+        learnFrames.append(SKTexture(imageNamed: "handLearn1"))
+        learnFrames.append(SKTexture(imageNamed: "handLearn2"))
+        learnFrames.append(SKTexture(imageNamed: "handLearn3"))
+        learnFrames.append(SKTexture(imageNamed: "handLearn4"))
+        learnFrames.append(SKTexture(imageNamed: "handLearn5"))
+        let learnAnimationFrames = SKAction.animate(with: learnFrames, timePerFrame: 1.4/20)
         
         
         
         
-        return SKAction.sequence([.fadeIn(withDuration: 0.4), learnAnimationFrames, .wait(forDuration: 1.8), .fadeOut(withDuration: 0.4)])
+        return SKAction.sequence([.fadeIn(withDuration: 0.4), learnAnimationFrames, .wait(forDuration: 1.4), .fadeOut(withDuration: 0.4)])
     }
     
     

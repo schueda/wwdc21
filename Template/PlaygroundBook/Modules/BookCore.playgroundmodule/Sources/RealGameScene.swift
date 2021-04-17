@@ -272,7 +272,7 @@ public class RealGameScene: SKScene {
     }
     
     func playStartSound() {
-        let url: URL = Bundle.main.url(forResource: "startSoundw", withExtension: "mp3")!
+        let url: URL = Bundle.main.url(forResource: "startSound", withExtension: "mp3")!
         mistakeSound = try! AVAudioPlayer(contentsOf: url, fileTypeHint: nil)
 
         mistakeSound.prepareToPlay()
