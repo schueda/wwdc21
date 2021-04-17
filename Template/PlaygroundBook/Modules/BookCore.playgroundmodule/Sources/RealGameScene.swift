@@ -253,6 +253,33 @@ public class RealGameScene: SKScene {
         mistakeSound.play()
     }
     
+    func playTouchUpSound() {
+        let url: URL = Bundle.main.url(forResource: "touchUp", withExtension: "mp3")!
+        mistakeSound = try! AVAudioPlayer(contentsOf: url, fileTypeHint: nil)
+
+        mistakeSound.prepareToPlay()
+        mistakeSound.volume = 0.3
+        mistakeSound.play()
+    }
+    
+    func playTouchDownSound() {
+        let url: URL = Bundle.main.url(forResource: "touchDown", withExtension: "mp3")!
+        mistakeSound = try! AVAudioPlayer(contentsOf: url, fileTypeHint: nil)
+
+        mistakeSound.prepareToPlay()
+        mistakeSound.volume = 0.3
+        mistakeSound.play()
+    }
+    
+    func playStartSound() {
+        let url: URL = Bundle.main.url(forResource: "startSoundw", withExtension: "mp3")!
+        mistakeSound = try! AVAudioPlayer(contentsOf: url, fileTypeHint: nil)
+
+        mistakeSound.prepareToPlay()
+        mistakeSound.volume = 0.3
+        mistakeSound.play()
+    }
+    
     
     override public func didMove(to view: SKView) {
         setupBackground()
@@ -315,12 +342,14 @@ public class RealGameScene: SKScene {
             startButton.texture = SKTexture(imageNamed: "pressedStartButton")
             startButton.size = CGSize(width: startButton.frame.size.width, height: startButton.frame.size.height * 0.8225)
             startButton.position = CGPoint(x: startButton.position.x, y: startButton.position.y - startButton.frame.size.height * 0.0875)
+            playStartSound()
             startButton.run(.wait(forDuration: 0.35)) {
                 self.startButton.texture = SKTexture(imageNamed: "startButton")
                 self.startButton.size = CGSize(width: self.startButton.frame.size.width, height: self.startButton.frame.size.height / 0.8225)
                 self.startButton.position = CGPoint(x: self.startButton.position.x, y: self.size.height/4.5 )
                 self.startButton.run(.wait(forDuration: 0.35)) {
                     self.startButton.run(.fadeOut(withDuration: 0.2)) {
+                        self.startButton.position = CGPoint(x: 1000, y: 1000)
                         self.startButton.removeFromParent()
                         self.createThreeButtons()
                         self.createRepeatButton()
@@ -354,7 +383,9 @@ public class RealGameScene: SKScene {
                     self.repeatButton.texture = SKTexture(imageNamed: "keyRepeat")
                     self.repeatButton.size = CGSize(width: 37.0, height: 47.1)
                     self.repeatButton.position = CGPoint(x: self.size.width * 0.5, y: self.size.height * 0.925)
+                    self.playTouchDownSound()
                 }
+                playTouchUpSound()
                 repeatButton.texture = SKTexture(imageNamed: "keyPressedRepeat")
                 repeatButton.size = CGSize(width: repeatButton.frame.size.width, height: repeatButton.frame.size.height * 0.8225)
                 repeatButton.position = CGPoint(x: repeatButton.position.x, y: repeatButton.position.y - repeatButton.frame.size.height * 0.04375)

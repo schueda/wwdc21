@@ -7,6 +7,7 @@
 
 import SpriteKit
 import AVFoundation
+import PlaygroundSupport
 
 public class Cutscene: SKScene {
     let animations = Animations()
@@ -52,6 +53,15 @@ public class Cutscene: SKScene {
     
     func playTouchUpSound() {
         let url: URL = Bundle.main.url(forResource: "touchUp", withExtension: "mp3")!
+        touchUpSound = try! AVAudioPlayer(contentsOf: url, fileTypeHint: nil)
+
+        touchUpSound.prepareToPlay()
+        touchUpSound.volume = 0.3
+        touchUpSound.play()
+    }
+    
+    func playStartSound() {
+        let url: URL = Bundle.main.url(forResource: "startSound", withExtension: "mp3")!
         touchUpSound = try! AVAudioPlayer(contentsOf: url, fileTypeHint: nil)
 
         touchUpSound.prepareToPlay()
@@ -179,8 +189,9 @@ public class Cutscene: SKScene {
     }
     
     func wholeAnimation() {
-        let fadeDuration = 0.7
-        let intervalDuration = 2.0
+        let fadeDuration = 1.0
+        let intervalDuration = 2.5
+        let silentDuration = 0.5
         let fadeIn = SKAction.fadeIn(withDuration: fadeDuration)
         let fadeOut = SKAction.fadeOut(withDuration: fadeDuration)
         let halfScale = SKAction.scale(by: 0.5, duration: 0)
@@ -188,6 +199,7 @@ public class Cutscene: SKScene {
         
         let intervalWithFades = SKAction.wait(forDuration: intervalDuration + 2*fadeDuration)
         let interval = SKAction.wait(forDuration: intervalDuration)
+        let silentInterval = SKAction.wait(forDuration: silentDuration)
         
         let startDelay = SKAction.wait(forDuration: 1)
         
@@ -224,29 +236,32 @@ public class Cutscene: SKScene {
         let changeToDeafIcon = SKAction.run { self.icon2.text = "􀧁" }
         
         text1.run(SKAction.sequence([startDelay, fadeIn, interval, fadeOut,
-                                     moveToFamily, changeToFamilyText, halfScale, intervalWithFades, fadeIn, interval, fadeOut,
-                                     moveToGramma, changeToGrammaText, intervalWithFades, fadeIn, interval, fadeOut,
-                                     moveToCommunication, changeToCommunicationText, intervalWithFades, fadeIn, interval, fadeOut]))
+                                     moveToFamily, changeToFamilyText, halfScale, intervalWithFades, silentInterval, silentInterval, fadeIn, interval, fadeOut,
+                                     moveToGramma, changeToGrammaText, intervalWithFades, silentInterval, silentInterval, fadeIn, interval, fadeOut,
+                                     moveToCommunication, changeToCommunicationText, intervalWithFades, silentInterval, silentInterval, fadeIn, interval, fadeOut]))
 
         icon1.run(SKAction.sequence([startDelay, fadeIn, interval, fadeOut,
-                                     moveToCenter, changeToFamilyIcon, intervalWithFades, fadeIn, interval, fadeOut,
-                                     moveToUnderGramma, changeToStoryIcon, intervalWithFades, fadeIn, interval, fadeOut,
-                                     moveToUnderCommunicating, changeToCommunicatingIcon, intervalWithFades, fadeIn, interval, fadeOut]))
+                                     moveToCenter, changeToFamilyIcon, intervalWithFades, silentInterval, silentInterval, fadeIn, interval, fadeOut,
+                                     moveToUnderGramma, changeToStoryIcon, intervalWithFades, silentInterval, silentInterval, fadeIn, interval, fadeOut,
+                                     moveToUnderCommunicating, changeToCommunicatingIcon, intervalWithFades, silentInterval,silentInterval, fadeIn, interval, fadeOut]))
 
-        text2.run(SKAction.sequence([startDelay, intervalWithFades, fadeIn, interval, fadeOut,
-                                     moveToFamily, changeToFrustratingText, halfScale, intervalWithFades, fadeIn, interval, fadeOut,
-                                     moveToLove, changeToLoveText, intervalWithFades, fadeIn, interval, fadeOut,
-                                     moveToDeaf, changeToDeafText, intervalWithFades, fadeIn]))
+        text2.run(SKAction.sequence([startDelay, intervalWithFades, silentInterval, fadeIn, interval, fadeOut,
+                                     moveToFamily, changeToFrustratingText, halfScale, intervalWithFades, silentInterval, silentInterval, fadeIn, interval, fadeOut,
+                                     moveToLove, changeToLoveText, intervalWithFades, silentInterval, silentInterval, fadeIn, interval, fadeOut,
+                                     moveToDeaf, changeToDeafText, intervalWithFades, silentInterval, fadeIn]))
 
-        icon2.run(SKAction.sequence([startDelay, intervalWithFades, fadeIn, interval, fadeOut,
-                                     moveToOverFamily, changeToFrustratingIcon, rotateIcon2, intervalWithFades, fadeIn, interval, fadeOut,
-                                     rotateIcon2ToDefault, moveToUnderLove, changeToLoveIcon, intervalWithFades, fadeIn, interval, fadeOut,
-                                     moveToUnderDeaf, changeToDeafIcon, intervalWithFades, fadeIn]))
+        icon2.run(SKAction.sequence([startDelay, intervalWithFades, silentInterval, fadeIn, interval, fadeOut,
+                                     moveToOverFamily, changeToFrustratingIcon, rotateIcon2, intervalWithFades, silentInterval, silentInterval, fadeIn, interval, fadeOut,
+                                     rotateIcon2ToDefault, moveToUnderLove, changeToLoveIcon, intervalWithFades, silentInterval, silentInterval, fadeIn, interval, fadeOut,
+                                     moveToUnderDeaf, changeToDeafIcon, intervalWithFades, silentInterval, fadeIn, interval])) {
+            PlaygroundPage.current.navigateTo(page: .next)
+        }
     }
     
     func touchDown(atPoint pos : CGPoint) {
         let fadeDuration = 0.4
         if startKey.contains(pos) {
+            playStartSound()
             startKey.texture = SKTexture(imageNamed: "pressedStartButton")
             startKey.size = CGSize(width: startKey.frame.size.width, height: startKey.frame.size.height * 0.8225)
             startKey.position = CGPoint(x: startKey.position.x, y: startKey.position.y - startKey.frame.size.height * 0.0875)
@@ -260,8 +275,10 @@ public class Cutscene: SKScene {
                     }
                     self.hand.run(.fadeOut(withDuration: fadeDuration))
                     self.startKey.run(.fadeOut(withDuration: fadeDuration)) {
+                        self.startKey.position = CGPoint(x: 1000, y: 1000)
                         self.startKey.removeFromParent()
                         for key in self.keyNodes {
+                            key.position = CGPoint(x: 1000, y: 1000)
                             key.removeFromParent()
                         }
                         self.hand.removeFromParent()

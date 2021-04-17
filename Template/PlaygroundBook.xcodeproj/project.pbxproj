@@ -26,12 +26,16 @@
 		6142B82326278BD1003B2A7E /* combo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6142B82226278BD1003B2A7E /* combo.mp3 */; };
 		6142B82826278BDA003B2A7E /* correct.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6142B82726278BDA003B2A7E /* correct.mp3 */; };
 		6142B82D26278BDE003B2A7E /* mistake.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6142B82C26278BDE003B2A7E /* mistake.mp3 */; };
+		615E0BBD262A1158000F6689 /* Epilogue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615E0BBC262A1158000F6689 /* Epilogue.swift */; };
+		615E0BCE262AA16F000F6689 /* Practicing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615E0BCD262AA16F000F6689 /* Practicing.swift */; };
 		616045DF261F9075004E51EC /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616045DE261F9075004E51EC /* Animations.swift */; };
 		61CE5FFA262257C300BF0934 /* RealGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CE5FF9262257C300BF0934 /* RealGameScene.swift */; };
 		61F4C4242627C7480012324E /* LearningLiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F4C4232627C7480012324E /* LearningLiveView.swift */; };
 		61F4C450262861D40012324E /* Cutscene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F4C44F262861D40012324E /* Cutscene.swift */; };
 		61F4C45F262866450012324E /* touchDown.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 61F4C45D262866450012324E /* touchDown.mp3 */; };
 		61F4C460262866450012324E /* touchUp.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 61F4C45E262866450012324E /* touchUp.mp3 */; };
+		61FEBF8F2629299800936A50 /* thumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = 61FEBF8E2629299800936A50 /* thumbnail.png */; };
+		61FEBF9D2629C99000936A50 /* startSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 61FEBF9C2629C98F00936A50 /* startSound.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -126,7 +130,7 @@
 
 /* Begin PBXFileReference section */
 		447A2677260036B500C533BC /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		5E086DC02051C5A7004D8D25 /* MeuPlaygroundLegal.playgroundbook */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MeuPlaygroundLegal.playgroundbook; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E086DC02051C5A7004D8D25 /* TheWorldIsQuiet.playgroundbook */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TheWorldIsQuiet.playgroundbook; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E086DC72051DD03004D8D25 /* BookOverridingBuildSettings.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = BookOverridingBuildSettings.xcconfig; sourceTree = "<group>"; };
 		5E086DCD2051DDB8004D8D25 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LiveView.storyboard; sourceTree = "<group>"; };
 		5E086DCF2051DF0F004D8D25 /* Manifest.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Manifest.plist; sourceTree = "<group>"; };
@@ -155,12 +159,16 @@
 		6142B82226278BD1003B2A7E /* combo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = combo.mp3; sourceTree = "<group>"; };
 		6142B82726278BDA003B2A7E /* correct.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = correct.mp3; sourceTree = "<group>"; };
 		6142B82C26278BDE003B2A7E /* mistake.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = mistake.mp3; sourceTree = "<group>"; };
+		615E0BBC262A1158000F6689 /* Epilogue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Epilogue.swift; sourceTree = "<group>"; };
+		615E0BCD262AA16F000F6689 /* Practicing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Practicing.swift; sourceTree = "<group>"; };
 		616045DE261F9075004E51EC /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		61CE5FF9262257C300BF0934 /* RealGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealGameScene.swift; sourceTree = "<group>"; };
 		61F4C4232627C7480012324E /* LearningLiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearningLiveView.swift; sourceTree = "<group>"; };
 		61F4C44F262861D40012324E /* Cutscene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cutscene.swift; sourceTree = "<group>"; };
 		61F4C45D262866450012324E /* touchDown.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = touchDown.mp3; sourceTree = "<group>"; };
 		61F4C45E262866450012324E /* touchUp.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = touchUp.mp3; sourceTree = "<group>"; };
+		61FEBF8E2629299800936A50 /* thumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = thumbnail.png; sourceTree = "<group>"; };
+		61FEBF9C2629C98F00936A50 /* startSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = startSound.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,7 +200,7 @@
 		5E086DA4204F706E004D8D25 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5E086DC02051C5A7004D8D25 /* MeuPlaygroundLegal.playgroundbook */,
+				5E086DC02051C5A7004D8D25 /* TheWorldIsQuiet.playgroundbook */,
 				5EF2F9AB2054BBF300191409 /* libBookCore.a */,
 				5E6F7E612368FB6A008CC191 /* libBookAPI.a */,
 				5EA2E3BD2056F35A00416A35 /* LiveViewTestApp.app */,
@@ -302,8 +310,10 @@
 				447A2677260036B500C533BC /* GameScene.swift */,
 				616045DE261F9075004E51EC /* Animations.swift */,
 				61F4C4232627C7480012324E /* LearningLiveView.swift */,
+				615E0BBC262A1158000F6689 /* Epilogue.swift */,
 				61CE5FF9262257C300BF0934 /* RealGameScene.swift */,
 				61F4C44F262861D40012324E /* Cutscene.swift */,
+				615E0BCD262AA16F000F6689 /* Practicing.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -349,7 +359,9 @@
 			isa = PBXGroup;
 			children = (
 				5EF2F97E2054B6E400191409 /* ManifestPlist.strings */,
+				61FEBF8E2629299800936A50 /* thumbnail.png */,
 				5E086DCC2051DDAE004D8D25 /* LiveView.storyboard */,
+				61FEBF9C2629C98F00936A50 /* startSound.mp3 */,
 				6142B82226278BD1003B2A7E /* combo.mp3 */,
 				61F4C45D262866450012324E /* touchDown.mp3 */,
 				61F4C45E262866450012324E /* touchUp.mp3 */,
@@ -388,7 +400,7 @@
 			);
 			name = PlaygroundBook;
 			productName = PlaygroundBook;
-			productReference = 5E086DC02051C5A7004D8D25 /* MeuPlaygroundLegal.playgroundbook */;
+			productReference = 5E086DC02051C5A7004D8D25 /* TheWorldIsQuiet.playgroundbook */;
 			productType = "com.apple.product-type.bundle";
 		};
 		5E6F7E602368FB6A008CC191 /* BookAPI */ = {
@@ -499,8 +511,10 @@
 			files = (
 				61F4C45F262866450012324E /* touchDown.mp3 in Resources */,
 				61F4C460262866450012324E /* touchUp.mp3 in Resources */,
+				61FEBF8F2629299800936A50 /* thumbnail.png in Resources */,
 				6142B82826278BDA003B2A7E /* correct.mp3 in Resources */,
 				5EF2F97C2054B6E400191409 /* ManifestPlist.strings in Resources */,
+				61FEBF9D2629C99000936A50 /* startSound.mp3 in Resources */,
 				5E551EC52371FC3F00784365 /* Assets.xcassets in Resources */,
 				6142B82D26278BDE003B2A7E /* mistake.mp3 in Resources */,
 				5E086DCA2051DDAE004D8D25 /* LiveView.storyboard in Resources */,
@@ -575,9 +589,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				615E0BCE262AA16F000F6689 /* Practicing.swift in Sources */,
 				61CE5FFA262257C300BF0934 /* RealGameScene.swift in Sources */,
 				447A2678260036B500C533BC /* GameScene.swift in Sources */,
 				61F4C4242627C7480012324E /* LearningLiveView.swift in Sources */,
+				615E0BBD262A1158000F6689 /* Epilogue.swift in Sources */,
 				61F4C450262861D40012324E /* Cutscene.swift in Sources */,
 				5E3196F32061DEA40077BBD7 /* LiveViewSupport.swift in Sources */,
 				616045DF261F9075004E51EC /* Animations.swift in Sources */,

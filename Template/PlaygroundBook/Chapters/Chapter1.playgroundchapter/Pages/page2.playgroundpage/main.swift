@@ -1,11 +1,24 @@
+/*:
+# Practicing
+ On this page, the hand will do a random letter gesture, and you will be given three options.
+ 
+ If you get it right, your score and streak will increase. **Try to get 3 in a row to experience a little surprise.**
+ 
+ If you get it wrong, your streak will be set to zero, but don't worry, **you’ll be shown the right answer** so that in the next time you get it right. Have fun and try to learn from your mistakes.
+ 
+> The hand gestures that appear after the attempts are not from Libras, they are simply thumbs up and thumbs down.
+ 
+> If you got distracted or it was too fast, you can hit the repeat key and watch the hand gesture again.
+ 
+ */
+
+
 //#-hidden-code
 //
 //  See LICENSE folder for this template’s licensing information.
 //
 //  Abstract:
 //  The Swift file containing the source code edited by the user of this playground book.
-//
-//#-end-hidden-code
 
 import PlaygroundSupport
 import SpriteKit
@@ -19,4 +32,5 @@ sceneView.presentScene(scene)
 
 PlaygroundPage.current.liveView = sceneView
 PlaygroundPage.current.needsIndefiniteExecution = true
-
+//
+//#-end-hidden-code

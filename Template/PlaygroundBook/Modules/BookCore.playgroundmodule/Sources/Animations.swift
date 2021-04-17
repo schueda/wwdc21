@@ -246,4 +246,17 @@ class Animations {
         
         return SKAction.sequence([getIntoTheScene, interval, getOutOfTheScene])
     }
+    
+    func createHelloAnimation(size: CGSize, handCenter: CGPoint) -> SKAction {
+        let interval = SKAction.wait(forDuration: 0.4)
+        let moveToInicialHelloPosition = SKAction.move(by: CGVector(dx: 100, dy: 0), duration: 0.4)
+        let helloHand = SKAction.setTexture(SKTexture(imageNamed: "handHello"), resize: true)
+        let returnCenter = SKAction.move(to: handCenter, duration: 0.4)
+        
+        let helloPath = UIBezierPath()
+        helloPath.addArc(withCenter: CGPoint(x: -100, y: 0), radius: 100, startAngle: 0 , endAngle: 2 * .pi, clockwise: true)
+        let followTheCircle = SKAction.follow(helloPath.cgPath, duration: 2)
+        
+        return SKAction.sequence([defaultHand, moveToInicialHelloPosition, helloHand, interval, followTheCircle, interval, defaultHand, returnCenter])
+    }
 }

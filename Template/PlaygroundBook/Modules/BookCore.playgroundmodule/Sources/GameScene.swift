@@ -1,5 +1,6 @@
 import SpriteKit
 import AVFoundation
+import PlaygroundSupport
 
 public class GameScene: SKScene {
     let animations = Animations()
