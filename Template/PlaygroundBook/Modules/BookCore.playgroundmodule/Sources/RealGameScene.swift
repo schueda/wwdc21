@@ -24,8 +24,7 @@ public class RealGameScene: SKScene {
     var scoreLabel: SKLabelNode!
     var streakLabel: SKLabelNode!
     
-    let sparklesHandsLabel = SKLabelNode(text: "􀲯")
-    let sparklesHandsBorder = SKLabelNode(text: "􀲮")
+    let sparklesHands = SKSpriteNode(imageNamed: "handSparklesIcon")
     var sparklesHandsAnimation: SKAction!
     
     var hand: SKSpriteNode!
@@ -46,7 +45,6 @@ public class RealGameScene: SKScene {
     var pastRounds = [String]()
     var score: Int = 0
     var streak: Int = 0
-    
     
     func createThreeButtons() {
         leftButton = SKSpriteNode(imageNamed: "keyL")
@@ -137,8 +135,7 @@ public class RealGameScene: SKScene {
 
             if streak%3 == 0 {
                 playComboSound()
-                sparklesHandsLabel.run(sparklesHandsAnimation)
-                sparklesHandsBorder.run(sparklesHandsAnimation)
+                sparklesHands.run(sparklesHandsAnimation)
             } else {
                 playCorrectSound()
             }
@@ -286,11 +283,9 @@ public class RealGameScene: SKScene {
         setupHand()
         createStartButton()
         
-        sparklesHandsLabel.position = CGPoint(x: size.width*1.1, y: size.height*0.85)
-        addChild(sparklesHandsLabel)
-        sparklesHandsBorder.position = CGPoint(x: size.width*1.1, y: size.height*0.85)
-        sparklesHandsBorder.fontColor = UIColor(red: 51/256, green: 51/256, blue: 51/256, alpha: 1)
-        addChild(sparklesHandsBorder)
+        sparklesHands.position = CGPoint(x: size.width*1.1, y: size.height*0.84)
+        sparklesHands.setScale(0.1)
+        addChild(sparklesHands)
         sparklesHandsAnimation = animations.createSparklesHandsAnimation(size: size)
         
         handAnimations["A"] = animations.createAAnimation()

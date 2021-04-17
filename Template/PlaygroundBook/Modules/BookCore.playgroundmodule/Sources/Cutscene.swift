@@ -15,8 +15,8 @@ public class Cutscene: SKScene {
     
     var text1 = SKSpriteNode(imageNamed: "flyText")
     var text2 = SKSpriteNode(imageNamed: "beachesText")
-    var icon1 = SKLabelNode(text: "􀑓")
-    var icon2 = SKLabelNode(text: "􀆷")
+    var icon1 = SKSpriteNode(imageNamed: "flyIcon")
+    var icon2 = SKSpriteNode(imageNamed: "beachIcon")
     
     var hand: SKSpriteNode!
     var handCenter = CGPoint.zero
@@ -94,16 +94,14 @@ public class Cutscene: SKScene {
     func createIcon1() {
         icon1.alpha = 0
         icon1.position = CGPoint(x: size.width * 0.25, y: size.height * 0.55)
-        icon1.fontSize = 100
-        icon1.fontColor = UIColor(hue: 0, saturation: 0, brightness: 0.2, alpha: 1)
+        icon1.setScale(0.27)
         addChild(icon1)
     }
     
     func createIcon2() {
         icon2.alpha = 0
-        icon2.position = CGPoint(x: size.width * 0.75, y: size.height * 0.4)
-        icon2.fontSize = 100
-        icon2.fontColor = UIColor(hue: 0, saturation: 0, brightness: 0.2, alpha: 1)
+        icon2.position = CGPoint(x: size.width * 0.75, y: size.height * 0.45)
+        icon2.setScale(0.27)
         addChild(icon2)
     }
     
@@ -207,7 +205,7 @@ public class Cutscene: SKScene {
         let moveToFamily = SKAction.move(to: CGPoint(x: size.width * 0.5, y: size.height * 0.35), duration: 0)
         let changeToFamilyText = SKAction.setTexture(SKTexture(imageNamed: "familyText"), resize: true)
         let moveToGramma = SKAction.move(to: CGPoint(x: size.width * 0.25, y: size.height * 0.75), duration: 0)
-        let changeToGrammaText = SKAction.setTexture(SKTexture(imageNamed: "grammaText"), resize: true)
+        let changeToGrammaText = SKAction.setTexture(SKTexture(imageNamed: "storyText"), resize: true)
         let moveToCommunication = SKAction.move(to: CGPoint(x: size.width * 0.75, y: size.height * 0.75), duration: 0)
         let changeToCommunicationText = SKAction.setTexture(SKTexture(imageNamed: "communicatingText"), resize: true)
         
@@ -219,21 +217,20 @@ public class Cutscene: SKScene {
         let changeToDeafText = SKAction.setTexture(SKTexture(imageNamed: "deafText"), resize: true)
         
         //bloco de codigo do icon1
-        let moveToCenter = SKAction.move(to: CGPoint(x: size.width * 0.5, y: size.height * 0.5), duration: 0)
-        let changeToFamilyIcon = SKAction.run { self.icon1.text = "􀝋" }
-        let moveToUnderGramma = SKAction.move(to: CGPoint(x: size.width * 0.25, y: size.height * 0.5), duration: 0)
-        let changeToStoryIcon = SKAction.run { self.icon1.text = "􀌯" }
-        let moveToUnderCommunicating = SKAction.move(to: CGPoint(x: size.width * 0.75, y: size.height * 0.5), duration: 0)
-        let changeToCommunicatingIcon = SKAction.run { self.icon1.text = "􀯩" }
+        let moveToFamilyIconPosition = SKAction.move(to: CGPoint(x: size.width * 0.5, y: size.height * 0.52), duration: 0)
+        let changeToFamilyIcon = SKAction.setTexture(SKTexture(imageNamed: "familyIcon"), resize: true)
+        let moveToUnderGramma = SKAction.move(to: CGPoint(x: size.width * 0.25, y: size.height * 0.55), duration: 0)
+        let changeToStoryIcon = SKAction.setTexture(SKTexture(imageNamed: "storyIcon"), resize: true)
+        let moveToUnderCommunicating = SKAction.move(to: CGPoint(x: size.width * 0.75, y: size.height * 0.53), duration: 0)
+        let changeToCommunicatingIcon = SKAction.setTexture(SKTexture(imageNamed: "communicatingIcon"), resize: true)
         
         //bloco de codigo do icon2
-        let moveToOverFamily = SKAction.move(to: CGPoint(x: size.width * 0.46, y: size.height * 0.5), duration: 0)
-        let changeToFrustratingIcon = SKAction.run { self.icon2.text = "􀓨" }
-        let rotateIcon2 = SKAction.run {self.icon2.zRotation = -.pi/4}
-        let moveToUnderLove = SKAction.move(to: CGPoint(x: size.width * 0.75, y: size.height * 0.4), duration: 0)
-        let changeToLoveIcon = SKAction.run { self.icon2.text = "􀊵" }
-        let moveToUnderDeaf = SKAction.move(to: CGPoint(x: size.width * 0.5, y: size.height * 0.5), duration: 0)
-        let changeToDeafIcon = SKAction.run { self.icon2.text = "􀧁" }
+        let moveToOverFamily = SKAction.move(to: CGPoint(x: size.width * 0.5, y: size.height * 0.55), duration: 0)
+        let changeToFrustratingIcon = SKAction.setTexture(SKTexture(imageNamed: "frustratingIcon"), resize: true)
+        let moveToUnderLove = SKAction.move(to: CGPoint(x: size.width * 0.75, y: size.height * 0.45), duration: 0)
+        let changeToLoveIcon = SKAction.setTexture(SKTexture(imageNamed: "loveIcon"), resize: true)
+        let moveToUnderDeaf = SKAction.move(to: CGPoint(x: size.width * 0.5, y: size.height * 0.6), duration: 0)
+        let changeToDeafIcon = SKAction.setTexture(SKTexture(imageNamed: "deafIcon"), resize: true)
         
         text1.run(SKAction.sequence([startDelay, fadeIn, interval, fadeOut,
                                      moveToFamily, changeToFamilyText, halfScale, intervalWithFades, silentInterval, silentInterval, fadeIn, interval, fadeOut,
@@ -241,7 +238,7 @@ public class Cutscene: SKScene {
                                      moveToCommunication, changeToCommunicationText, intervalWithFades, silentInterval, silentInterval, fadeIn, interval, fadeOut]))
 
         icon1.run(SKAction.sequence([startDelay, fadeIn, interval, fadeOut,
-                                     moveToCenter, changeToFamilyIcon, intervalWithFades, silentInterval, silentInterval, fadeIn, interval, fadeOut,
+                                     moveToFamilyIconPosition, changeToFamilyIcon, intervalWithFades, silentInterval, silentInterval, fadeIn, interval, fadeOut,
                                      moveToUnderGramma, changeToStoryIcon, intervalWithFades, silentInterval, silentInterval, fadeIn, interval, fadeOut,
                                      moveToUnderCommunicating, changeToCommunicatingIcon, intervalWithFades, silentInterval,silentInterval, fadeIn, interval, fadeOut]))
 
@@ -251,7 +248,7 @@ public class Cutscene: SKScene {
                                      moveToDeaf, changeToDeafText, intervalWithFades, silentInterval, fadeIn]))
 
         icon2.run(SKAction.sequence([startDelay, intervalWithFades, silentInterval, fadeIn, interval, fadeOut,
-                                     moveToOverFamily, changeToFrustratingIcon, rotateIcon2, intervalWithFades, silentInterval, silentInterval, fadeIn, interval, fadeOut,
+                                     moveToOverFamily, changeToFrustratingIcon, intervalWithFades, silentInterval, silentInterval, fadeIn, interval, fadeOut,
                                      rotateIcon2ToDefault, moveToUnderLove, changeToLoveIcon, intervalWithFades, silentInterval, silentInterval, fadeIn, interval, fadeOut,
                                      moveToUnderDeaf, changeToDeafIcon, intervalWithFades, silentInterval, fadeIn, interval])) {
             PlaygroundPage.current.navigateTo(page: .next)

@@ -240,8 +240,8 @@ class Animations {
     }
     
     func createSparklesHandsAnimation(size: CGSize) -> SKAction {
-        let getIntoTheScene = SKAction.move(to: CGPoint(x: size.width*0.87, y: size.height*0.85), duration: 0.2)
-        let getOutOfTheScene = SKAction.move(to: CGPoint(x: size.width*1.1, y: size.height*0.85), duration: 0.2)
+        let getIntoTheScene = SKAction.move(to: CGPoint(x: size.width*0.88, y: size.height*0.84), duration: 0.2)
+        let getOutOfTheScene = SKAction.move(to: CGPoint(x: size.width*1.1, y: size.height*0.84), duration: 0.2)
         let interval = SKAction.wait(forDuration: 1.6)
         
         return SKAction.sequence([getIntoTheScene, interval, getOutOfTheScene])

@@ -1,6 +1,6 @@
 /*:
 # Practicing
- On this page, the hand will do a random letter gesture, and you will be given three options.
+ On this page, the hand will make a random letter gesture, and you will be given three options.
  
  If you get it right, your score and streak will increase. **Try to get 3 in a row to experience a little surprise.**
  
@@ -8,7 +8,7 @@
  
 > The hand gestures that appear after the attempts are not from _Libras_, they are simply thumbs up and thumbs down.
  
-> If you got distracted or it was too fast, you can hit the repeat key and watch sign again.
+> If you got distracted or it was too fast, you can hit the repeat key to rewatch the sign animation.
  
  */
 
